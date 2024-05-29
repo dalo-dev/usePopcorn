@@ -1,7 +1,7 @@
 import { useState } from "react";
-import MovieList from "./MovieList";
+import { ChildrenProp } from "../interfaces/types";
 
-function ListBox() {
+function ListBox({ children }: ChildrenProp) {
   const [isOpen1, setIsOpen1] = useState<boolean>(true);
 
   return (
@@ -12,7 +12,7 @@ function ListBox() {
       >
         {isOpen1 ? "–" : "+"}
       </button>
-      {isOpen1 && <MovieList />}
+      {isOpen1 && children}
     </div>
   );
 }
