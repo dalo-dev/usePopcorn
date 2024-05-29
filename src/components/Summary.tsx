@@ -1,7 +1,13 @@
-const average = (arr) =>
-  arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
+import { WatchedMovieI } from "../interfaces/types";
 
-function Summary({ watched }) {
+const average = (arr: number[]) =>
+  arr.reduce((acc, cur, _, arr) => acc + cur / arr.length, 0);
+
+interface SummaryProps {
+  watched: WatchedMovieI[];
+}
+
+function Summary({ watched }: SummaryProps) {
   const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
   const avgUserRating = average(watched.map((movie) => movie.userRating));
   const avgRuntime = average(watched.map((movie) => movie.runtime));

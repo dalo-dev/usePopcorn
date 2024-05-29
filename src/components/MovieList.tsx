@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { MovieI } from "../interfaces/types";
 
-const tempMovieData = [
+const tempMovieData: MovieI[] = [
   {
     imdbID: "tt1375666",
     Title: "Inception",
@@ -24,7 +25,11 @@ const tempMovieData = [
   },
 ];
 
-function Movie({ movie }) {
+interface MovieProps {
+  movie: MovieI;
+}
+
+function Movie({ movie }: MovieProps) {
   return (
     <li key={movie.imdbID}>
       <img src={movie.Poster} alt={`${movie.Title} poster`} />
@@ -40,7 +45,7 @@ function Movie({ movie }) {
 }
 
 function MovieList() {
-  const [movies, setMovies] = useState(tempMovieData);
+  const [movies, setMovies] = useState<MovieI[]>(tempMovieData);
 
   return (
     <ul className="list">

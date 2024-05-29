@@ -1,4 +1,13 @@
-function WatchedMovie({ movie }) {
+import { WatchedMovieI } from "../interfaces/types";
+
+interface WatchedListProps {
+  watched: WatchedMovieI[];
+}
+interface WatchedMovieProps {
+  movie: WatchedMovieI;
+}
+
+function WatchedMovie({ movie }: WatchedMovieProps) {
   return (
     <li>
       <img src={movie.Poster} alt={`${movie.Title} poster`} />
@@ -21,7 +30,7 @@ function WatchedMovie({ movie }) {
   );
 }
 
-function WatchedList({ watched }) {
+function WatchedList({ watched }: WatchedListProps) {
   return (
     <ul className="list">
       {watched.map((movie) => (

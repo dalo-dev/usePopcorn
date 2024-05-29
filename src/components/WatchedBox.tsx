@@ -1,8 +1,9 @@
 import { useState } from "react";
 import Summary from "./Summary";
 import WatchedList from "./WatchedList";
+import { WatchedMovieI } from "../interfaces/types";
 
-const tempWatchedData = [
+const tempWatchedData: WatchedMovieI[] = [
   {
     imdbID: "tt1375666",
     Title: "Inception",
@@ -26,8 +27,8 @@ const tempWatchedData = [
 ];
 
 function WatchedBox() {
-  const [watched, setWatched] = useState(tempWatchedData);
-  const [isOpen2, setIsOpen2] = useState(true);
+  const [watched, setWatched] = useState<WatchedMovieI[]>(tempWatchedData);
+  const [isOpen2, setIsOpen2] = useState<boolean>(true);
 
   return (
     <div className="box">
