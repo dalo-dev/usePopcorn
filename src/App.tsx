@@ -19,12 +19,13 @@ function App() {
   const [watched, setWatched] = useState<WatchedMovieI[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
-  const query = "trasdasdansformers";
+  const [query, setQuery] = useState<string>("");
 
   useEffect(() => {
     const fetchMovies = async function () {
       try {
         setIsLoading(true);
+        setError("");
         const res = await fetch(
           `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
         );
@@ -45,14 +46,19 @@ function App() {
       }
     };
 
+    if (!query.trim() || query.length < 3) {
+      setMovies([]);
+      setError("");
+      return;
+    }
     fetchMovies();
-  }, []);
+  }, [query]);
 
   return (
     <>
       <Navbar>
         <Logo />
-        <Search />
+        <Search query={query} setQuery={setQuery} />
         <NumResults movies={movies} />
       </Navbar>
       <Main>
