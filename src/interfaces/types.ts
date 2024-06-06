@@ -2,9 +2,9 @@ import React from "react";
 
 export interface MovieI {
   imdbID: string;
-  Title: string;
-  Year: string;
-  Poster: string;
+  title: string;
+  year: string;
+  poster: string;
 }
 
 export interface WatchedMovieI extends MovieI {

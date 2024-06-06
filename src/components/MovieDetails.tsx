@@ -2,22 +2,35 @@ import { useEffect, useState } from "react";
 import StarRating from "./StarRating";
 import Loader from "./Loader";
 import ErrorMessage from "./ErrorMessage";
-import { MovieDetailsI } from "../interfaces/types";
+import { MovieDetailsI, WatchedMovieI } from "../interfaces/types";
 
 const KEY = "d84c3d7d";
 
 interface MovieDetailsProps {
   selectedId: string;
+  watched: WatchedMovieI[];
   onCloseMovie: () => void;
+  onAddWatched: (wacthedMovie: WatchedMovieI) => void;
 }
 
-function MovieDetails({ selectedId, onCloseMovie }: MovieDetailsProps) {
+function MovieDetails({
+  selectedId,
+  watched,
+  onCloseMovie,
+  onAddWatched,
+}: MovieDetailsProps) {
   const [movie, setMovie] = useState<MovieDetailsI | Record<string, never>>({});
+  const [userRating, setUserRating] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
+  const isAlreadyWatched = watched.some(
+    (movie: WatchedMovieI) => movie.imdbID === selectedId
+  );
+
   const {
     Title: title,
+    Year: year,
     Poster: poster,
     Runtime: runtime,
     imdbRating,
@@ -27,6 +40,20 @@ function MovieDetails({ selectedId, onCloseMovie }: MovieDetailsProps) {
     Director: director,
     Genre: genre,
   } = movie;
+
+  const handleAdd = function () {
+    const newWatchedMovie: WatchedMovieI = {
+      imdbID: selectedId,
+      title,
+      year,
+      poster,
+      imdbRating: Number(imdbRating),
+      runtime: Number(runtime.split(" ")[0]),
+      userRating,
+    };
+    onAddWatched(newWatchedMovie);
+    onCloseMovie();
+  };
 
   useEffect(() => {
     const getMovieDetails = async function () {
@@ -79,7 +106,22 @@ function MovieDetails({ selectedId, onCloseMovie }: MovieDetailsProps) {
           </header>
           <section>
             <div className="rating">
-              <StarRating maxRating={10} size={24} />
+              {!isAlreadyWatched ? (
+                <>
+                  <StarRating
+                    maxRating={10}
+                    size={24}
+                    onSetRating={setUserRating}
+                  />
+                  {userRating > 0 && (
+                    <button className="btn-add" onClick={handleAdd}>
+                      Add to list
+                    </button>
+                  )}
+                </>
+              ) : (
+                <p>You already rated this movie!</p>
+              )}
             </div>
             <p>
               <em>{plot}</em>

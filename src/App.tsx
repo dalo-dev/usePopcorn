@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import { MovieI, WatchedMovieI } from "./interfaces/types";
 import Navbar from "./components/Navbar";
 import Main from "./components/Main";
 import Logo from "./components/Logo";
@@ -7,8 +9,6 @@ import MovieList from "./components/MovieList";
 import Box from "./components/Box";
 import Summary from "./components/Summary";
 import WatchedList from "./components/WatchedList";
-import { useEffect, useState } from "react";
-import { MovieI, WatchedMovieI } from "./interfaces/types";
 import Loader from "./components/Loader";
 import ErrorMessage from "./components/ErrorMessage";
 import MovieDetails from "./components/MovieDetails";
@@ -30,6 +30,10 @@ function App() {
   const handleCloseMovie = function () {
     setSelectedId("");
   };
+
+  function handleAddWatched(movie: WatchedMovieI) {
+    setWatched((currentWatched) => [...currentWatched, movie]);
+  }
 
   useEffect(() => {
     const fetchMovies = async function () {
@@ -84,6 +88,8 @@ function App() {
             <MovieDetails
               selectedId={selectedId}
               onCloseMovie={handleCloseMovie}
+              onAddWatched={handleAddWatched}
+              watched={watched}
             />
           ) : (
             <>
