@@ -2,17 +2,22 @@ import { useEffect, useState } from "react";
 import StarRating from "./StarRating";
 import Loader from "./Loader";
 import ErrorMessage from "./ErrorMessage";
+import { MovieDetailsI } from "../interfaces/types";
 
 const KEY = "d84c3d7d";
 
-function MovieDetails({ selectedId, onCloseMovie }: { selectedId: string }) {
-  const [movie, setMovie] = useState({});
+interface MovieDetailsProps {
+  selectedId: string;
+  onCloseMovie: () => void;
+}
+
+function MovieDetails({ selectedId, onCloseMovie }: MovieDetailsProps) {
+  const [movie, setMovie] = useState<MovieDetailsI | Record<string, never>>({});
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
   const {
     Title: title,
-    Year: year,
     Poster: poster,
     Runtime: runtime,
     imdbRating,

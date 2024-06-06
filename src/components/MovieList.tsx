@@ -2,9 +2,11 @@ import { MovieI } from "../interfaces/types";
 
 interface MovieProps {
   movie: MovieI;
+  onSelectMovie: (id: string) => void;
 }
 interface MovieListProps {
   movies: MovieI[];
+  onSelectMovie: (id: string) => void;
 }
 
 function Movie({ movie, onSelectMovie }: MovieProps) {
