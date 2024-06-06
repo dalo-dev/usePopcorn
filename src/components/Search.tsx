@@ -1,4 +1,9 @@
-function Search({ query, setQuery }) {
+interface SearchProps {
+  query: string;
+  setQuery: (q: string) => void;
+}
+
+function Search({ query, setQuery }: SearchProps) {
   return (
     <input
       className="search"
