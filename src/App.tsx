@@ -59,7 +59,7 @@ function App() {
         setError("");
       } catch (err) {
         if (err instanceof Error && err.name !== "AbortError") {
-          console.error(err.message);
+          console.log(err.message);
           setError(err.message);
         }
       } finally {
@@ -72,6 +72,8 @@ function App() {
       setError("");
       return;
     }
+
+    handleCloseMovie();
     fetchMovies();
 
     return () => {

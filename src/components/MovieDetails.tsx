@@ -57,6 +57,20 @@ function MovieDetails({
   };
 
   useEffect(() => {
+    const callback = function (e: KeyboardEvent) {
+      if (e.code === "Escape") {
+        onCloseMovie();
+      }
+    };
+
+    document.addEventListener("keyup", callback);
+
+    return () => {
+      document.removeEventListener("keyup", callback);
+    };
+  }, [onCloseMovie]);
+
+  useEffect(() => {
     const getMovieDetails = async function () {
       try {
         setIsLoading(true);
@@ -73,7 +87,7 @@ function MovieDetails({
         setMovie(data);
       } catch (err) {
         if (err instanceof Error) {
-          console.error(err.message);
+          console.log(err.message);
           setError(err.message);
         }
       } finally {
