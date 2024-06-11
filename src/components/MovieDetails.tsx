@@ -39,6 +39,7 @@ function MovieDetails({
     Actors: actors,
     Director: director,
     Genre: genre,
+    Type: type,
   } = movie;
 
   const handleAdd = function () {
@@ -48,7 +49,7 @@ function MovieDetails({
       year,
       poster,
       imdbRating: Number(imdbRating),
-      runtime: Number(runtime.split(" ")[0]),
+      runtime: type === "movie" ? Number(runtime.split(" ")[0]) : 0,
       userRating,
     };
     onAddWatched(newWatchedMovie);
