@@ -17,7 +17,9 @@ const KEY = "d84c3d7d";
 
 function App() {
   const [movies, setMovies] = useState<MovieI[]>([]);
-  const [watched, setWatched] = useState<WatchedMovieI[]>([]);
+  const [watched, setWatched] = useState<WatchedMovieI[]>(() =>
+    JSON.parse(localStorage.getItem("watched") || "[]")
+  );
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [query, setQuery] = useState<string>("");
@@ -33,11 +35,17 @@ function App() {
 
   function handleAddWatched(movie: WatchedMovieI) {
     setWatched((currentWatched) => [...currentWatched, movie]);
+
+    // localStorage.setItem("watched", JSON.stringify([...watched, movie]));
   }
 
   function handleDeleteWatched(id: string) {
     setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
   }
+
+  useEffect(() => {
+    localStorage.setItem("watched", JSON.stringify(watched));
+  }, [watched]);
 
   useEffect(() => {
     const controller = new AbortController();
