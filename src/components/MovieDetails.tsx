@@ -3,6 +3,7 @@ import StarRating from "./StarRating";
 import Loader from "./Loader";
 import ErrorMessage from "./ErrorMessage";
 import { MovieDetailsI, WatchedMovieI } from "../interfaces/types";
+import { useKey } from "../hooks/useKey";
 
 const KEY = "d84c3d7d";
 
@@ -58,23 +59,11 @@ function MovieDetails({
     onCloseMovie();
   };
 
+  useKey("Escape", onCloseMovie);
+
   useEffect(() => {
     if (userRating) countRef.current++;
   }, [userRating]);
-
-  useEffect(() => {
-    const callback = function (e: KeyboardEvent) {
-      if (e.code === "Escape") {
-        onCloseMovie();
-      }
-    };
-
-    document.addEventListener("keyup", callback);
-
-    return () => {
-      document.removeEventListener("keyup", callback);
-    };
-  }, [onCloseMovie]);
 
   useEffect(() => {
     const getMovieDetails = async function () {
