@@ -11,6 +11,7 @@ export interface WatchedMovieI extends MovieI {
   runtime: number;
   imdbRating: number;
   userRating: number;
+  countingRatingDecisions: number;
 }
 
 export interface ChildrenProp {
